@@ -1,7 +1,7 @@
 name: release-autopull
 on:
   push:
-    branches: release
+    branches: dev
 
 jobs:
   distribute:
