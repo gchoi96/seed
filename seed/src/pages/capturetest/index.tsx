@@ -1,19 +1,29 @@
 import { useScreenCapture } from "#/hooks/useScreenCapture";
-import { useEffect, useRef } from "react";
+import { useCallback, useEffect, useRef } from "react";
+import { collapseTextChangeRangesAcrossMultipleVersions } from "typescript";
 
 export default function CaptureTest() {
-  const { selectScreen, screen } = useScreenCapture();
-  const videoRef = useRef<HTMLVideoElement>(null);
+  const { selectScreen, videoRef } = useScreenCapture();
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+
+  const drawFrame = useCallback(
+    (video: HTMLVideoElement, canvas: HTMLCanvasElement) =>
+      requestAnimationFrame(function drawFrame() {
+        canvas.getContext("2d")?.drawImage(video, 0, 0);
+        requestAnimationFrame(drawFrame);
+      }),
+    []
+  );
 
   useEffect(() => {
-    if (!screen) return;
-    if (!videoRef.current) return;
-    videoRef.current.srcObject = screen;
-  }, [screen]);
+    if (!videoRef.current || !canvasRef.current) return;
+    console.log(videoRef)
+    drawFrame(videoRef.current, canvasRef.current);
+  }, [drawFrame, videoRef, canvasRef]);
 
   return (
     <div>
-      <video ref={videoRef} autoPlay></video>
+      <canvas ref={canvasRef}/>
       <button onClick={selectScreen}>화면 선택</button>
     </div>
   );

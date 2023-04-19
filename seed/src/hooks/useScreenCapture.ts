@@ -1,13 +1,20 @@
-import {  useRef, useState } from "react";
+import { createRef, useEffect, useRef, useState } from "react";
 
 export const useScreenCapture = () => {
-  const [screen, setScreen] = useState<MediaStream>();
-  
-  const selectScreen = () => {
-    navigator.mediaDevices
-    .getDisplayMedia({ video: true })
-    .then(setScreen);
-  }
+  const videoRef = useRef<HTMLVideoElement>();
 
-  return { selectScreen, screen };
+  useEffect(() => {
+    videoRef.current = document.createElement("video");
+    videoRef.current.autoplay = true;
+  }, []);
+
+  const selectScreen = () => {
+    navigator.mediaDevices.getDisplayMedia({ video: true }).then((screen) => {
+      if (!videoRef.current) return;
+      videoRef.current.srcObject = screen;
+      console.log(videoRef);
+    });
+  };
+
+  return { selectScreen, videoRef };
 };
