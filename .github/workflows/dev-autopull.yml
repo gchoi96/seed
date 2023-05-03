@@ -8,7 +8,7 @@ jobs:
     name: distribute
     runs-on: ubuntu-latest
     steps:
-    - name: git pull and restart docker
+    - name: git pull and restart pm2
       uses: appleboy/ssh-action@master
       with:
         host: ${{secrets.REMOTE_IP}}
@@ -18,3 +18,6 @@ jobs:
         script: |
             cd ${{secrets.REMOTE_DIR_NAME}}
             git pull https://github.com/gchoi96/seed.git dev
+            pm2 restart seed
+
+# https://minkukjo.github.io/devops/2020/08/29/Infra-23/
