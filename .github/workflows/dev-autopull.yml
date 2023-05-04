@@ -1,4 +1,4 @@
-name: release-autopull
+name: dev-autopull
 on:
   push:
     branches: dev
@@ -11,13 +11,12 @@ jobs:
     - name: git pull and restart pm2
       uses: appleboy/ssh-action@master
       with:
-        host: ${{secrets.REMOTE_IP}}
-        username: ${{secrets.REMOTE_SSH_ID}}
-        key: ${{secrets.REMOTE_PASSWORD}}
-        port: ${{secrets.REMOTE_SSH_PORT}}
+        host: ${{ secrets.REMOTE_IP }}
+        username: ${{ secrets.SSH_USERNAME }}
+        key: ${{ secrets.SSH_PRIVATE_KEY }}
+        passphrase: ${{ secrets.SSH_PASSPHRASE }}
         script: |
-            cd ${{secrets.REMOTE_DIR_NAME}}
-            git pull https://github.com/gchoi96/seed.git dev
+            cd ${{ secrets.REMOTE_DIR_NAME }}
+            git pull origin dev
+            yarn install
             pm2 restart seed
-
-# https://minkukjo.github.io/devops/2020/08/29/Infra-23/
