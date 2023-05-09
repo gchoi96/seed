@@ -4,8 +4,9 @@ export const useScreenCapture = () => {
   const videoRef = useRef<HTMLVideoElement>();
 
   useEffect(() => {
-    videoRef.current = document.createElement("video");
-    videoRef.current.autoplay = true;
+    const video = document.createElement("video");
+    video.autoplay = true;
+    videoRef.current = video;
   }, []);
 
   const selectScreen = useCallback(() => {
