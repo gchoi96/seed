@@ -12,7 +12,7 @@ const ReactiveCanvas = forwardRef<HTMLCanvasElement>((_, ref) => {
   const canvasRef = useForwardRef<HTMLCanvasElement>(ref, null);
   useEffect(() => {
     const canvas = canvasRef.current;
-    [canvas.width, canvas.height] = [canvas.offsetWidth * 2, canvas.offsetHeight * 2];
+    [canvas.width, canvas.height] = [canvas.offsetWidth, canvas.offsetHeight];
   }, [canvasRef]);
 
   return <Canvas ref={canvasRef} />;
