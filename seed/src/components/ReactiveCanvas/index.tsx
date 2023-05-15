@@ -12,7 +12,8 @@ const ReactiveCanvas = forwardRef<HTMLCanvasElement>((_, ref) => {
   const canvasRef = useForwardRef<HTMLCanvasElement>(ref, null);
   useEffect(() => {
     const canvas = canvasRef.current;
-    [canvas.width, canvas.height] = [canvas.offsetWidth, canvas.offsetHeight];
+    // 유저 해상도 가져오도록 수정 예정
+    [canvas.width, canvas.height] = [1280, 720];
   }, [canvasRef]);
 
   return <Canvas ref={canvasRef} />;
