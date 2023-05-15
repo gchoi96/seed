@@ -1,8 +1,8 @@
 import { useCallback } from "react";
 import cv from "@techstark/opencv-js";
-import ImageUtils from "#/utils/imageUtils";
-import { Point, RectangleBounds } from "#/types/Point";
+import {  RectangleBounds } from "#/types/Point";
 import { getBoundsFromMaxPoint } from "#/utils/coordinateUtils";
+import { createImage } from "#/utils/imageUtils";
 
 export const useOpenCV = () => {
   const compareColor = (color1: Uint8ClampedArray, color2: Uint8ClampedArray) => {
@@ -15,7 +15,7 @@ export const useOpenCV = () => {
       image: string | HTMLElement,
     ): Promise<RectangleBounds> => {
       let imageElement = image;
-      if (typeof image === "string") imageElement = await ImageUtils.createImage(image as string);
+      if (typeof image === "string") imageElement = await createImage(image as string);
 
       const [src, template] = [cv.imread(canvas), cv.imread(imageElement)];
       const [dst, mask] = [new cv.Mat(), new cv.Mat()];

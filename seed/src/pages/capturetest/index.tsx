@@ -9,7 +9,6 @@ export default function CaptureTest() {
   const { drawFrame } = useAnimation();
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const { getTitle } = useMap();
-  
   useEffect(() => {
     if (!videoRef.current || !canvasRef.current) return;
     drawFrame(videoRef.current, canvasRef.current);
