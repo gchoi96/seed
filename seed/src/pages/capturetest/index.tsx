@@ -15,7 +15,9 @@ export default function CaptureTest() {
 
   const onClickOCR = () => {
     if (!canvasRef.current) return;
-    Tesseract.recognize(canvasRef.current, "kor").then(({ data: { text } }) => console.log(text));
+    Tesseract.recognize(canvasRef.current, "eng+kor").then(({ data: { text } }) =>
+      console.log(text)
+    );
   };
 
   return (
